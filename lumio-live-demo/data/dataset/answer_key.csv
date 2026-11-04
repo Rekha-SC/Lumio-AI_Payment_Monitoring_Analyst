@@ -1,0 +1,20 @@
+day,start,end,kind,name,scope,cause,source
+1,07-02-2025 10:20,07-02-2025 11:00,incident,Card network partial outage,"{""channel"": ""Card""}","{""type"": ""dependency"", ""detail"": ""card-network""}",simulated
+1,07-02-2025 14:00,07-02-2025 14:50,data_quality,Collector stops sending: Bank Z West,"{""bank"": ""Bank Z"", ""region"": ""West""}","{""type"": ""data_quality"", ""detail"": ""missing data""}",simulated
+1,07-02-2025 19:00,07-02-2025 23:15,incident,Bank X Android v5.2 slows UPI payments,"{""bank"": ""Bank X"", ""channel"": ""UPI"", ""platform"": ""Android""}","{""type"": ""release"", ""detail"": ""5.2""}",simulated
+2,08-02-2025 02:00,08-02-2025 04:30,not_incident,Planned maintenance: Bank W core banking,"{""bank"": ""Bank W""}","{""type"": ""maintenance"", ""detail"": ""CHG-2291""}",simulated
+2,08-02-2025 15:30,08-02-2025 16:30,incident,Card-testing bot attack on Bank Y cards,"{""bank"": ""Bank Y"", ""channel"": ""Card""}","{""type"": ""fraud"", ""detail"": ""card testing""}",simulated
+3,09-02-2025 21:00,10-02-2025 03:00,incident,UPI switch memory leak (slow drift),"{""channel"": ""UPI""}","{""type"": ""dependency"", ""detail"": ""upi-switch""}",simulated
+4,10-02-2025 11:00,10-02-2025 12:45,incident,Bank Z iOS v3.9 login bug — payments vanish,"{""bank"": ""Bank Z"", ""platform"": ""iOS""}","{""type"": ""release"", ""detail"": ""3.9""}",simulated
+4,10-02-2025 14:30,11-02-2025 23:00,advisory,Winter storm (real NAB blizzard): volume collapses everywhere,{},"{""type"": ""system_wide"", ""detail"": ""volume""}",NAB nyc_taxi
+5,11-02-2025 09:35,11-02-2025 09:45,transient,One-off core-banking spike at Bank W (real NAB),"{""bank"": ""Bank W""}","{""type"": ""transient"", ""detail"": ""spike""}",NAB ec2_request_latency
+5,11-02-2025 15:00,11-02-2025 16:00,incident,Regional internet outage: West,"{""region"": ""West""}","{""type"": ""regional"", ""detail"": ""West""}",simulated
+6,12-02-2025 09:30,12-02-2025 09:50,data_quality,Duplicate records: Bank W North,"{""bank"": ""Bank W"", ""region"": ""North""}","{""type"": ""data_quality"", ""detail"": ""duplicates""}",simulated
+6,12-02-2025 13:00,12-02-2025 14:30,incident,Fraud-check database saturates (real NAB level shift),"{""channel"": ""Card""}","{""type"": ""dependency"", ""detail"": ""fraud-check""}",NAB rds_cpu_utilization
+6,12-02-2025 20:00,12-02-2025 22:30,incident,High-value card payments time out at Bank Y,"{""bank"": ""Bank Y"", ""channel"": ""Card""}","{""type"": ""novel"", ""detail"": ""amount_band:> $500""}",simulated
+7,13-02-2025 08:15,13-02-2025 09:00,incident,UPI switch partial outage,"{""channel"": ""UPI""}","{""type"": ""dependency"", ""detail"": ""upi-switch""}",simulated
+7,13-02-2025 14:00,13-02-2025 15:10,incident,Bank W core banking failure (real NAB system failure),"{""bank"": ""Bank W""}","{""type"": ""dependency"", ""detail"": ""core-banking-W""}",NAB ec2_request_latency
+8,14-02-2025 16:30,14-02-2025 22:30,not_incident,Payday + Valentine's Day rush,{},"{""type"": ""expected"", ""detail"": ""payday""}",simulated
+8,14-02-2025 19:30,14-02-2025 21:00,incident,Bank X core banking saturates during the payday peak,"{""bank"": ""Bank X""}","{""type"": ""dependency"", ""detail"": ""core-banking-X""}",simulated
+9,15-02-2025 11:00,15-02-2025 11:40,data_quality,Collector stops sending: Bank Y (all segments),"{""bank"": ""Bank Y""}","{""type"": ""data_quality"", ""detail"": ""missing data""}",simulated
+10,16-02-2025 03:00,16-02-2025 05:00,not_incident,Planned maintenance: Bank X core banking,"{""bank"": ""Bank X""}","{""type"": ""maintenance"", ""detail"": ""CHG-2307""}",simulated

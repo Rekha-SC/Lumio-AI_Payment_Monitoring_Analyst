@@ -1,0 +1,9 @@
+lumio.db*
+models/
+.venv/
+__pycache__/
+*.pyc
+.env
+
+analysis/pipeline_demo.db*
+analysis/models_notebook/

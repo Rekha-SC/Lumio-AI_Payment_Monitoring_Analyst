@@ -1,0 +1,50 @@
+# Lumio live demo as separate services on PostgreSQL:  docker compose up --build   ->  http://localhost:8000
+# The worker container sends the emails; set the mail server in the dashboard under Settings.
+x-common: &common
+  build: .
+  environment: &env
+    LUMIO_DATABASE_URL: postgresql+psycopg2://lumio:lumio@db:5432/lumio
+    LUMIO_MODEL_DIR: /models
+    ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+  volumes:
+    - models:/models
+  depends_on:
+    db:
+      condition: service_healthy
+  restart: unless-stopped
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: lumio
+      POSTGRES_PASSWORD: lumio
+      POSTGRES_DB: lumio
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lumio"]
+      interval: 3s
+      retries: 20
+
+  api:                      # dashboard + REST API + ingest endpoint
+    <<: *common
+    environment:
+      <<: *env
+      LUMIO_MODE: api
+    ports: ["8000:8000"]
+
+  simulator:                # monitoring feeds: loads history, then streams the evening to the ingest API
+    <<: *common
+    command: ["python", "-m", "lumio.simulator"]
+    environment:
+      <<: *env
+      LUMIO_INGEST_URL: http://api:8000
+
+  worker:                   # data-quality gate, detector, investigator, AI agent, narrator
+    <<: *common
+    command: ["python", "-m", "lumio.worker"]
+
+volumes:
+  pgdata:
+  models:

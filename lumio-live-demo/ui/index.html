@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumio · Live demo</title>
+<link rel="icon" href="/ui/logo.png">
+<link rel="stylesheet" href="/ui/style.css">
+<script src="/ui/vendor/chart.umd.js"></script>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><img src="/ui/logo.png" alt=""><div><b>Lumio</b><span>See what your systems are hiding</span></div></div>
+  <div class="clock">
+    <div class="clock-date" id="clockDate">—</div>
+    <div class="clock-row"><span class="clock-time" id="clockTime">--:--</span><span class="live" id="liveBadge"><i></i><span>PAUSED</span></span><span class="turbo" id="turbo"></span></div>
+    <div class="timeline" id="timeline"></div>
+  </div>
+  <div class="controls">
+    <button class="btn primary" id="playBtn" title="Play / pause (space)"><span id="playIcon">▶</span><span id="playLabel">Play</span></button>
+    <div class="seg" id="speedSeg" role="group" aria-label="Playback speed"></div>
+    <div class="menu-wrap">
+      <button class="btn" id="jumpBtn">Jump to ▾</button>
+      <div class="menu" id="jumpMenu"></div>
+    </div>
+    <button class="btn" id="injectBtn" title="Break something live">Inject</button>
+    <button class="btn ghost" id="resetBtn" title="Start the 10 days again">Reset</button>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button data-tab="live" class="on">Live</button>
+  <button data-tab="incidents">Incidents <em id="incCount"></em></button>
+  <button data-tab="reports">Reports</button>
+  <button data-tab="outbox">Email outbox <em id="mailCount" class="teal"></em></button>
+  <button data-tab="quality">Data quality</button>
+  <button data-tab="learning">Learning</button>
+  <button data-tab="proof">Proof</button>
+  <button data-tab="dataset">Dataset</button>
+  <button data-tab="settings">Settings</button>
+  <button data-tab="how">How it works</button>
+  <span class="tabs-right"><button class="pill clickable" id="emailPill">email off</button><span class="pill" id="agentMode">agent</span><span class="pill" id="scanInfo">next scan —</span></span>
+</nav>
+
+<main>
+<!-- ============================== LIVE ============================== -->
+<section id="tab-live" class="tab on">
+  <div class="kpis" id="kpis"></div>
+  <div class="grid2">
+    <div class="card chart-card">
+      <div class="card-head">
+        <div><div class="kicker">Live · actual vs what Lumio expects right now</div><h3 id="chartTitle">All payments</h3></div>
+        <div class="chart-legend"><span><i class="lg act"></i>Actual</span><span><i class="lg exp"></i>Expected</span><span><i class="lg band"></i>Normal range</span><span><i class="lg alert"></i>Alert threshold</span>
+          <button class="btn small ghost" id="scopeAll">All payments</button></div>
+      </div>
+      <div class="chart-wrap"><canvas id="latChart"></canvas></div>
+      <div class="minis">
+        <div><div class="kicker">Success rate</div><div class="chart-wrap small"><canvas id="sucChart"></canvas></div></div>
+        <div><div class="kicker">Payments per minute</div><div class="chart-wrap small"><canvas id="volChart"></canvas></div></div>
+      </div>
+    </div>
+    <div class="card feed-card">
+      <div class="card-head"><div><div class="kicker">Alerts</div><h3>Routed to the right team, by email</h3></div></div>
+      <div id="alertFeed" class="alert-feed"></div>
+    </div>
+  </div>
+  <div class="grid2 b">
+    <div class="card">
+      <div class="card-head"><div><div class="kicker">48 segments · scored every 15 minutes</div><h3>Segment health <small id="gridTs"></small></h3></div>
+        <div class="heat-legend"><span><i class="hl ok"></i>Normal</span><span><i class="hl warm"></i>Drifting</span><span><i class="hl bad"></i>Abnormal</span><span><i class="hl hold"></i>Data held</span><span><i class="hl inc"></i>In an incident</span></div></div>
+      <div id="heat" class="heat"></div>
+      <p class="hint">Click a cell to chart that segment. Labels: <b>2.4×</b> slower · <b>91%</b> success · <b>−60%</b> volume.</p>
+    </div>
+    <div class="card">
+      <div class="card-head"><div><div class="kicker">Activity</div><h3>What Lumio is doing</h3></div>
+        <label class="toggle"><input type="checkbox" id="showWatch"> show “watching” notes</label></div>
+      <div id="events" class="events"></div>
+    </div>
+  </div>
+</section>
+
+<section id="tab-incidents" class="tab">
+  <div class="card"><div class="card-head"><div><div class="kicker">All 10 days</div><h3>Incidents, advisories and data tickets</h3></div></div>
+    <table class="tbl" id="incTable"></table><p class="hint">Click a row for the alert, routing, emails, investigation trace and cost.</p></div>
+</section>
+
+<section id="tab-reports" class="tab">
+  <div class="kpis" id="repKpis"></div>
+  <div class="days" id="dayCards"></div>
+  <div id="dayDetail"></div>
+</section>
+
+<section id="tab-outbox" class="tab">
+  <div class="outbox">
+    <div class="card"><div class="card-head"><div><div class="kicker">Every email Lumio composed</div><h3>Outbox</h3></div>
+      <button class="btn small" id="sendAll">Send all previews</button></div>
+      <div id="outList" class="out-list"></div></div>
+    <div class="card preview-card"><div class="card-head"><div><div class="kicker">Exactly as received</div><h3 id="prevTitle">Select an email</h3></div><span id="prevStatus"></span></div>
+      <iframe id="prevFrame" title="Email preview"></iframe></div>
+  </div>
+</section>
+
+<section id="tab-quality" class="tab">
+  <div class="kpis" id="dqKpis"></div>
+  <div class="grid2 even">
+    <div class="card"><div class="card-head"><div><div class="kicker">Data-quality gate · latest window <span id="dqWin"></span></div><h3>Can this data be trusted?</h3></div></div>
+      <div id="dqHeat" class="heat"></div>
+      <p class="hint">Missing buckets → held, not scored. Duplicates → removed first. A broken collector raises a ticket to Monitoring &amp; Data Engineering, never a page.</p></div>
+    <div class="card"><div class="card-head"><div><div class="kicker">Gate log</div><h3>What was held or cleaned</h3></div></div><div id="dqEvents" class="events"></div></div>
+  </div>
+</section>
+
+<section id="tab-learning" class="tab">
+  <div class="grid2 even">
+    <div class="card"><div class="card-head"><div><div class="kicker">Learning loop</div><h3>Every decision changes Lumio</h3></div></div>
+      <div class="explain"><div><b>Acknowledge / act</b> from the dashboard or straight from the email: the action is logged on the incident and escalation stops.</div>
+        <div><b>Not useful</b> raises those segments' threshold by +1.0 so they need a bigger deviation next time.</div></div>
+      <div id="sensGrid" class="heat"></div>
+      <p class="hint">Numbers are each segment's alert threshold. Change the default in Settings → Alert rules.</p></div>
+    <div class="card"><div class="card-head"><div><div class="kicker">Decisions</div><h3>Acknowledgements, actions and feedback</h3></div></div><div id="learnEvents" class="events"></div></div>
+  </div>
+</section>
+
+<section id="tab-proof" class="tab">
+  <div class="kpis" id="proofKpis"></div>
+  <div class="card"><div class="card-head"><div><div class="kicker">The dataset's answer key vs Lumio · scored live</div><h3>Every planted event — and what Lumio did</h3></div></div>
+    <table class="tbl" id="proofTable"></table>
+    <p class="hint">Lumio never sees this answer key. “Time to detect” includes the deliberate confirmation scan that stops one-off blips paging anyone.</p></div>
+  <div class="grid2 even">
+    <div class="card"><div class="card-head"><div><div class="kicker">Stress test · 35 simulated days</div><h3>Problems caught on messy data</h3></div></div><div id="stressBars" class="bars"></div></div>
+    <div class="card"><div class="card-head"><div><div class="kicker">Is the AI agent worth it?</div><h3>Who explained each incident, and the cost</h3></div></div><table class="tbl" id="costTable"></table></div>
+  </div>
+</section>
+
+<section id="tab-dataset" class="tab">
+  <div class="grid3" id="nabCards"></div>
+  <div class="grid2 even">
+    <div class="card"><div class="card-head"><div><div class="kicker">10 days · 6 business days + 2 weekends</div><h3>The calendar</h3></div>
+      <label class="toggle"><input type="checkbox" id="revealKey"> reveal the answer key</label></div>
+      <div id="calendar" class="calendar"></div></div>
+    <div class="card"><div class="card-head"><div><div class="kicker">Download</div><h3>The dataset files</h3></div></div>
+      <div id="dsFiles"></div>
+      <p class="hint">5-minute buckets for 48 segments (4 banks × UPI/Card × Android/iOS × 3 regions), split by app version, plus 8 upstream services. Open them in Excel or Power BI.</p></div>
+  </div>
+</section>
+
+<section id="tab-settings" class="tab">
+  <div class="grid3 settings">
+    <div class="card" id="setEmail"></div>
+    <div class="card" id="setRules"></div>
+    <div class="card" id="setDepts"></div>
+  </div>
+</section>
+
+<section id="tab-how" class="tab">
+  <div class="card"><div class="card-head"><div><div class="kicker">Architecture · live counters</div><h3>One data pipeline, several services</h3></div><span class="pill" id="dbBadge"></span></div><div id="arch" class="arch"></div></div>
+  <div class="grid3" id="principles"></div>
+</section>
+</main>
+
+<div class="banner" id="banner"></div>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true"><button class="close" id="drawerClose" aria-label="Close">✕</button><div id="drawerBody"></div></aside>
+
+<div class="modal" id="injectModal" aria-hidden="true">
+  <div class="card modal-card">
+    <div class="card-head"><div><div class="kicker">Live demo</div><h3>Break something — Lumio is not told</h3></div><button class="close" id="injectClose">✕</button></div>
+    <div class="form">
+      <label>Bank<select id="injBank"></select></label>
+      <label>Channel<select id="injChannel"></select></label>
+      <label>Platform<select id="injPlatform"></select></label>
+      <label>What breaks<select id="injEffect"><option value="slowdown">Payments slow down</option><option value="failures">Payments start failing</option><option value="drop">Payments stop arriving (volume drop)</option><option value="gap">Monitoring data stops arriving</option></select></label>
+    </div>
+    <p class="hint">Starts in 5 simulated minutes and lasts 75. Watch the heatmap, the alerts — and your inbox.</p>
+    <div class="modal-actions"><button class="btn ghost" id="injectCancel">Cancel</button><button class="btn primary" id="injectGo">Inject</button></div>
+  </div>
+</div>
+<div class="tip" id="tip"></div>
+<div class="toast" id="toast"></div>
+<script src="/ui/app.js"></script>
+</body>
+</html>

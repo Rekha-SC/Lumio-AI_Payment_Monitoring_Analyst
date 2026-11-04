@@ -1,0 +1,7 @@
+ts,feed,message
+2025-02-07 18:58:00,deploy,Deploy feed: Bank X Android app v5.2 staged rollout started (target 40% of users)
+2025-02-08 01:45:00,change,"Change calendar: planned maintenance CHG-2291 — Bank W core banking upgrade, 02:00–04:30"
+2025-02-10 10:55:00,deploy,Deploy feed: Bank Z iOS app v3.9 rollout started (target 50% of users)
+2025-02-10 16:00:00,weather,"Weather feed: winter storm warning for the region, Mon 17:00 until Tue evening"
+2025-02-14 08:00:00,calendar,Business calendar: payday (the 15th falls on Saturday) and Valentine's Day — evening rush expected
+2025-02-16 02:45:00,change,"Change calendar: planned maintenance CHG-2307 — Bank X core banking patching, 03:00–05:00"
