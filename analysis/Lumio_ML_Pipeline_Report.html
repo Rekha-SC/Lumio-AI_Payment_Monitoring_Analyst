@@ -7887,8 +7887,8 @@ a.anchor-link {
 </tr>
 <tr>
 <td>12</td>
-<td><strong>Summary &amp; professor's questions</strong></td>
-<td>Pipeline map + likely viva questions</td>
+<td><strong>Summary &amp; design FAQ</strong></td>
+<td>Pipeline map + key design decisions</td>
 <td>—</td>
 </tr>
 </tbody>
@@ -10784,7 +10784,7 @@ In the app, Detector() loads models/baseline.joblib at start-up, so training hap
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
-<h1 id="Professor's-likely-questions-on-the-pipeline">Professor's likely questions on the pipeline<a class="anchor-link" href="#Professor's-likely-questions-on-the-pipeline">¶</a></h1><p><strong>1. Does the model update with every transaction?</strong>
+<h1 id="Design-decisions:-frequently-asked-questions">Design decisions: frequently asked questions<a class="anchor-link" href="#Design-decisions:-frequently-asked-questions">¶</a></h1><p><strong>1. Does the model update with every transaction?</strong>
 No. Transactions are summarised into 5-minute rows; the model scores each new row against what it learned from history. It is re-trained on a schedule, not continuously, so outages never become "normal" (Step 0, Step 10).</p>
 <p><strong>2. Why aggregate to 5 / 15 minutes instead of scoring each payment?</strong>
 A single payment carries almost no signal; a few hundred have a measurable average, failure rate and p95 with known noise. Aggregation also scales to millions of payments and protects privacy.</p>

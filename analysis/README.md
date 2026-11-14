@@ -1,21 +1,22 @@
-# Lumio — data analytics project (for the professor)
+# Lumio — data analytics project
 
 This folder is the **analysis side** of the capstone. The live app shows Lumio working; this notebook shows the data analytics behind it, step by step, on the same dataset.
 
 | File | What it is | Open with |
 |---|---|---|
-| `Lumio_Data_Analytics_Report.pdf` | The full report: every chart, table and finding, without code (31 pages) | Any PDF reader |
+| `Lumio_Data_Analytics_Report.pdf` | The full report: every chart, table and finding, without code (30 pages) | Any PDF reader |
 | `Lumio_Data_Analytics_Report.html` | The same report as a web page | Any browser |
 | `Lumio_Data_Analytics_Project.ipynb` | The runnable notebook (code + results) | Jupyter, VS Code, or Google Colab |
 | `Lumio_Data_Analytics_Project_with_code.pdf` / `.html` | The notebook with all code shown | PDF reader / browser |
-| `PROFESSOR_QA.md` | 35+ likely professor questions with prepared answers, plus the key numbers | Any text viewer |
+| `DESIGN_FAQ.md` | Key results and answers to 35+ common questions on the analysis and design choices | Any text viewer |
+| `PIPELINE_SUMMARY.md` | One-page summary of the ML pipeline results and design decisions | Any text viewer |
 
 ### Behind the dashboard: the ML pipeline walkthrough (separate notebook)
 
 | File | What it is |
 |---|---|
 | `Lumio_ML_Pipeline_Walkthrough.ipynb` | Runs Lumio's **real back-end code** step by step: load (CSV and SQL), clean (quality gate), EDA, feature engineering, time-based train/validation/test split, training and evaluation, hyperparameter tuning, anomaly scores, threshold tuning, live streaming into the database, rebuilding the dashboard chart and heatmap from SQL, monitoring and retraining. Answers "does it update with every transaction?" |
-| `Lumio_ML_Pipeline_Walkthrough.pdf` / `.html` | The same with all code and outputs (33 pages) |
+| `Lumio_ML_Pipeline_Walkthrough.pdf` / `.html` | The same with all code and outputs (31 pages) |
 | `Lumio_ML_Pipeline_Report.pdf` / `.html` | Results only, without code (18 pages) |
 
 It creates its own `pipeline_demo.db` and `models_notebook/` in this folder and never touches the live app's database. Runtime about 2 minutes.

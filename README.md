@@ -132,7 +132,7 @@ data/nab/       the three NAB source files + labels + licence (MIT)
 data/dataset/   the 10-day dataset and 3-week history as CSV, answer key, feeds
 tests/          end-to-end test: python -m tests.test_e2e   (add --inject for live injections)
 tools/          export_dataset.py regenerates data/dataset
-analysis/       data analytics notebook + report (PDF/HTML) + professor Q&A — see analysis/README.md
+analysis/       data analytics notebook + report (PDF/HTML) + design FAQ — see analysis/README.md
 ```
 
 ## Honest notes

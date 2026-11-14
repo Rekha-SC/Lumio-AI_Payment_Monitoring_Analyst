@@ -7924,8 +7924,8 @@ a.anchor-link {
 </tr>
 <tr>
 <td>14</td>
-<td>Professor's likely questions</td>
-<td>Viva / defence preparation</td>
+<td>Frequently asked questions</td>
+<td>Justifying design and analytical choices</td>
 </tr>
 </tbody>
 </table>
@@ -13730,7 +13730,7 @@ weighted avg      0.991     0.980     0.983     23004
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Limitations-(be-the-first-to-say-them)">Limitations (be the first to say them)<a class="anchor-link" href="#Limitations-(be-the-first-to-say-them)">¶</a></h3><ol>
+<h3 id="Limitations">Limitations<a class="anchor-link" href="#Limitations">¶</a></h3><ol>
 <li><strong>Simulated payments.</strong> The rhythm and three anomalies are real (NAB), but payment outcomes are simulated. Results show the <em>method</em> works; a pilot on a real bank's data is the next step.</li>
 <li><strong>One season.</strong> Three weeks of history cannot learn yearly patterns (holidays, tax season). Production needs 12+ months.</li>
 <li><strong>Planted incidents are known types.</strong> A truly novel failure may look different; that is why the app includes the AI agent and "cause unknown".</li>
@@ -13755,7 +13755,7 @@ weighted avg      0.991     0.980     0.983     23004
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
-<h1 id="14.-Professor's-likely-questions-%E2%80%94-and-how-to-answer-them">14. Professor's likely questions — and how to answer them<a class="anchor-link" href="#14.-Professor's-likely-questions-%E2%80%94-and-how-to-answer-them">¶</a></h1><h3 id="A.-Problem-&amp;-project-design">A. Problem &amp; project design<a class="anchor-link" href="#A.-Problem-&amp;-project-design">¶</a></h3><p><strong>1. Why is this a data analytics problem and not just an IT monitoring problem?</strong>
+<h1 id="14.-Frequently-asked-questions:-design-decisions">14. Frequently asked questions: design decisions<a class="anchor-link" href="#14.-Frequently-asked-questions:-design-decisions">¶</a></h1><h3 id="A.-Problem-&amp;-project-design">A. Problem &amp; project design<a class="anchor-link" href="#A.-Problem-&amp;-project-design">¶</a></h3><p><strong>1. Why is this a data analytics problem and not just an IT monitoring problem?</strong>
 Because the failures are <em>statistical</em>: every server is "up", but a slice of customers sees slower or failed payments. Spotting them needs baselines, seasonality, hypothesis tests and segmentation, which is analytics work, not uptime checks.</p>
 <p><strong>2. Which methodology did you follow?</strong>
 CRISP-DM (Section 0): business understanding → data understanding → preparation → modelling → evaluation → deployment (the live app).</p>
@@ -13825,8 +13825,8 @@ Only aggregated, non-personal telemetry is used; production would add pseudonymi
 Simulated outcomes, one season of history, known incident types, autocorrelation and business-case assumptions (Section 13).</p>
 <p><strong>32. If you had 3 more months, what would you do?</strong>
 Pilot on one bank's real data; 12 months of history for yearly seasonality; drift monitoring and monthly retraining; validate the Monte Carlo inputs; A/B-test alert thresholds with the on-call team.</p>
-<p><strong>33. What did you personally learn?</strong>
-<em>(Answer in your own words.)</em> For example: that "significant" isn't "important", that the baseline matters more than the threshold, and that the hardest part of analytics is turning a number into an action someone takes.</p>
+<p><strong>33. What were the key learnings?</strong>
+Statistical significance is not the same as practical importance; a good baseline matters more than the alert threshold; and the hardest part of analytics is turning a number into an action someone takes.</p>
 <hr/>
 <p><em>Data: Numenta Anomaly Benchmark (Lavin &amp; Ahmad, 2015; MIT licence) + simulated payments. Methods: pandas, SQLite, SciPy, statsmodels, scikit-learn.</em></p>
 </div>
